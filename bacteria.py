@@ -1,7 +1,7 @@
 def colonize(width, height, x_coordinate, y_coordinate, max_generation):
     surface = dict()
-    for column in range(width):
-        for row in range(height):
+    for row in range(height+1):
+        for column in range(width+1):
             surface[(column, row)] = False
     spread_like_bacteria(surface, (x_coordinate, y_coordinate), max_generation)
     # print(surface)
@@ -16,18 +16,17 @@ def spread_like_bacteria(surface, coordinate, max_generation):
         surface[coordinate]
     except KeyError:
         print('The coordinate is outside of the surface.')
-        return
-
-    if not surface[coordinate] and max_generation >= 0:
-        surface[coordinate] = True
-        spread_like_bacteria(
-            surface, (coordinate[0], coordinate[1]-1), max_generation-1)
-        spread_like_bacteria(
-            surface, (coordinate[0], coordinate[1]+1), max_generation-1)
-        spread_like_bacteria(
-            surface, (coordinate[0]-1, coordinate[1]), max_generation-1)
-        spread_like_bacteria(
-            surface, (coordinate[0]+1, coordinate[1]), max_generation-1)
+    else:
+        if (not surface[coordinate]) and max_generation >= 0:
+            surface[coordinate] = True
+            spread_like_bacteria(
+                surface, (coordinate[0], coordinate[1]-1), max_generation-1)
+            spread_like_bacteria(
+                surface, (coordinate[0], coordinate[1]+1), max_generation-1)
+            spread_like_bacteria(
+                surface, (coordinate[0]-1, coordinate[1]), max_generation-1)
+            spread_like_bacteria(
+                surface, (coordinate[0]+1, coordinate[1]), max_generation-1)
 
 
 def check_populated():
