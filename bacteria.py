@@ -2,14 +2,19 @@ import sys
 
 
 def colonize(width, height, x_coordinate, y_coordinate, max_generation):
-    if width <=0 or height <= 0:
+    if width <= 0 or height <= 0:
         raise ValueError('Width and heigh must be greater than 0.')
+    if x_coordinate <= 0 or x_coordinate > width:
+        raise ValueError('X-Coordinate must be between [0, width].')
+    if y_coordinate <= 0 or y_coordinate > height:
+        raise ValueError('Y-Coordinate must be between [0, height].')
+    if max_generation < 0:
+        raise ValueError('Maximum desired generation must be greater than 0.')
     surface = dict()
     for row in range(height+1):
         for column in range(width+1):
             surface[(column, row)] = False
     spread_like_bacteria(surface, (x_coordinate, y_coordinate), max_generation)
-    # print(surface)
     return surface
 
 
@@ -50,7 +55,7 @@ def print_surface(surface):
             width = coordinate[0]
         if coordinate[1] > height:
             height = coordinate[1]
-    
+
     for row in range(height+1):
         for column in range(width+1):
             if surface[(column, row)]:
@@ -63,6 +68,7 @@ def print_surface(surface):
 def check_argv(argv):
     if len(argv) < 6:
         raise IndexError('Need 5 command line arguments with this program.')
+    print(type(argv[2]))
 
 
 def main(argv):
@@ -70,36 +76,19 @@ def main(argv):
     Drive this program.
     """
     try:
-        check_argv(argv)
-    except IndexError as e:
-        print(e)
+        width, height, x_coordinate, y_coordinate, max_generation = int(
+        argv[1]), int(argv[2]), int(argv[3]), int(argv[4]), int(argv[5])
+    except (IndexError, ValueError):
+        print('Need 5 integer as command line arguments to start experiment.')
+        print('Experiment does not start.')
         return
+    try:
+        surface = colonize(width, height, x_coordinate, y_coordinate, max_generation)
+    except ValueError as e:
+        print(e)
+    else:
+        print_surface(surface)
     
-    try:
-        width = int(argv[1])
-    except ValueError:
-        print('Width muse be an integer.')
-    try:    
-        height = int(argv[2])
-    except ValueError:
-        print('Height muse be an integer.')
-    try:
-        x_coordinate = int(argv[3])
-    except ValueError:
-        print('X-coordinate muse be an integer.')
-    try:
-        y_coordinate = int(argv[4])
-    except ValueError:
-        print('Y-coordinate muse be an integer.')
-    try:
-        max_generation = int(argv[5])
-    except ValueError:
-        print('Maximum desired generation muse be an integer.')
-
-
-    surface = colonize(width, height, x_coordinate, y_coordinate, max_generation)
-    print_surface(surface)
-
 
 if __name__ == '__main__':
     main(sys.argv)
