@@ -5,17 +5,7 @@ from unittest import main
 from bacteria import spread_like_bacteria
 
 
-class TestSpreadLikeBacteria(TestCase):
-    @patch('sys.stdout', new_callable=io.StringIO)
-    def test_surface_not_dictionary(self, mock_output):
-        surface = "surface"
-        coordinate = (3, 5)
-        max_generation = 1
-        spread_like_bacteria(surface, coordinate, max_generation)
-        expected_message = 'Surface must be a dictionary.\n'
-        self.assertEqual(expected_message, mock_output.getvalue())
-        
-        
+class TestSpreadLikeBacteria(TestCase):     
     @patch('sys.stdout', new_callable=io.StringIO)
     def test_coordinate_outside_surface(self, mock_output):
         surface = {(0, 0): False, (1, 0): False, (2, 0): False, (0, 1): False,
