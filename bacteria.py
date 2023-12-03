@@ -14,7 +14,9 @@ def colonize(width, height, x_coordinate, y_coordinate, max_generation):
     for row in range(height):
         for column in range(width):
             surface[(column, row)] = False
+    print(surface)
     spread_like_bacteria(surface, (x_coordinate, y_coordinate), max_generation)
+    print(surface)
     return surface
 
 
@@ -25,19 +27,17 @@ def spread_like_bacteria(surface, coordinate, max_generation):
     if max_generation >= 0:
         try:
             surface[coordinate]
+        except TypeError:
+            print("Surface must be a dictionary.")
         except KeyError:
-            print(f'A bacteria is stopped the boundary.')
+            print(f'A bacteria is outside boundary.')
         else:
-            if (not surface[coordinate]) :
+            if not surface[coordinate] :
                 surface[coordinate] = True
-                spread_like_bacteria(
-                    surface, (coordinate[0], coordinate[1]-1), max_generation-1)
-                spread_like_bacteria(
-                    surface, (coordinate[0], coordinate[1]+1), max_generation-1)
-                spread_like_bacteria(
-                    surface, (coordinate[0]-1, coordinate[1]), max_generation-1)
-                spread_like_bacteria(
-                    surface, (coordinate[0]+1, coordinate[1]), max_generation-1)
+                spread_like_bacteria(surface, (coordinate[0], coordinate[1]-1), max_generation-1)
+                spread_like_bacteria(surface, (coordinate[0], coordinate[1]+1), max_generation-1)
+                spread_like_bacteria(surface, (coordinate[0]-1, coordinate[1]), max_generation-1)
+                spread_like_bacteria(surface, (coordinate[0]+1, coordinate[1]), max_generation-1)
 
 
 def check_populated():
@@ -94,4 +94,10 @@ def main(argv):
     
 
 if __name__ == '__main__':
-    main(sys.argv)
+    # main(sys.argv)
+    surface = {(0, 0): False, (1, 0): False, (2, 0): False, (0, 1): False,
+               (1, 1): False, (2, 1): False, (0, 2): False, (1, 2): False, (2, 2): False}
+    coordinate = (1, 1)
+    max_generation = 2
+    spread_like_bacteria(surface, coordinate, max_generation)
+    print(surface)
