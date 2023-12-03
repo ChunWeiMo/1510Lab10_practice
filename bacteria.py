@@ -30,7 +30,7 @@ def spread_like_bacteria(surface, coordinate, max_generation):
         except TypeError:
             print("Surface must be a dictionary.")
         except KeyError:
-            print(f'A bacteria is outside boundary.')
+            print(f'A bacteria is outside surface.')
         else:
             if not surface[coordinate] :
                 surface[coordinate] = True
