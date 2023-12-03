@@ -3,7 +3,7 @@ from unittest import main
 from bacteria import colonize
 
 
-class testColonize(TestCase):
+class TestColonize(TestCase):
     def test_width_is_0(self):
         with self.assertRaises(ValueError):
             width = 0
