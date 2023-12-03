@@ -5,15 +5,15 @@ from bacteria import print_surface
 def colonize(width, height, x_coordinate, y_coordinate, max_generation):
     if width <= 0 or height <= 0:
         raise ValueError('Width and heigh must be greater than 0.')
-    if x_coordinate <= 0 or x_coordinate > width:
+    if x_coordinate < 0 or x_coordinate > width:
         raise ValueError('X-Coordinate must be between [0, width].')
-    if y_coordinate <= 0 or y_coordinate > height:
+    if y_coordinate < 0 or y_coordinate > height:
         raise ValueError('Y-Coordinate must be between [0, height].')
     if max_generation < 0:
         raise ValueError('Maximum desired generation must be greater than 0.')
     surface = dict()
-    for row in range(height+1):
-        for column in range(width+1):
+    for row in range(height):
+        for column in range(width):
             surface[(column, row)] = False
     spread_breadth_first(surface, (x_coordinate, y_coordinate), max_generation)
     return surface
