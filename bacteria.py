@@ -15,7 +15,6 @@ def colonize(width, height, x_coordinate, y_coordinate, max_generation):
         for column in range(width):
             surface[(column, row)] = False
     spread_like_bacteria(surface, (x_coordinate, y_coordinate), max_generation)
-    print(surface)
     return surface
 
 
